@@ -39,3 +39,6 @@ keybase::cross::os
 
 # shellcheck source=/dev/null
 source "${KEYBASE_SOURCE_PATH}"/pgp.zsh
+
+# shellcheck source=/dev/null
+source "${KEYBASE_SOURCE_PATH}"/git.zsh
