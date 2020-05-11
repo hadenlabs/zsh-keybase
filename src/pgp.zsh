@@ -15,3 +15,11 @@ function keybase::pgp::public {
 function keybase::pgp::private {
     keybase pgp export -q "${GPG_SIGNING_KEY}" --secret
 }
+
+# keybase::pgp::import - private and public key of keybase
+function keybase::pgp::import {
+    message_info "starting import keybase to gpg"
+    keybase::pgp::public | gpg --import
+    keybase::pgp::private| gpg --allow-secret-key-import --import
+    message_success "finish import keybase to gpg"
+}
