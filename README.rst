@@ -1,5 +1,5 @@
 zsh-keybase
-==================================
+===========
 
 |Build Status| |GitHub issues| |GitHub license|
 
