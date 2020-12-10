@@ -30,3 +30,7 @@ function keybase::internal::gpg::install {
     brew install gpg
     message_success "Installed dependences for ${KEYBASE_PACKAGE_NAME}"
 }
+
+function keybase::internal::validation {
+    [ -z "${KEYBASE_PREFIX}" ] && message_warning "KEYBASE_PREFIX is neccesary"
+}

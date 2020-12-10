@@ -4,6 +4,8 @@
 function keybase::internal::main::factory {
     # shellcheck source=/dev/null
     source "${ZSH_KEYBASE_PATH}"/internal/base.zsh
+    # shellcheck source=/dev/null
+    source "${ZSH_KEYBASE_PATH}"/internal/helper.zsh
     case "${OSTYPE}" in
     darwin*)
         # shellcheck source=/dev/null
