@@ -34,10 +34,9 @@ function keybase::internal::file::name {
 
 # convert string to slug
 function keybase::internal::string::slug {
-    local data slug
+    local data
     data="${1}"
-    slug="$(echo "${data}" | sed -e 's/[^a-zA-Z0-9._-]/-/g')"
-    echo "${slug}"
+    echo "${data}" | sed -e 's/[^a-zA-Z0-9._-]/-/g'
 }
 
 # get file slug
@@ -87,14 +86,11 @@ function keybase::internal::encrypt {
 # filename file
 # user user to decrypt
 function keybase::internal::decrypt {
-    local filename user extension
+    local filename user extension name_orig
     file="${1}"
     user="${2}"
     keybase::internal::file::exists "${file}"
-    filename=$(keybase::internal::file::name "${file}")
     extension=$(keybase::internal::file::extension "${file}")
-    if [ -z "${user}" ]; then
-        user="$(keybase whoami)"
-    fi
-    keybase decrypt -b -i "${file}" -o CHANGELOG."${KEYBASE_PREFIX}".rst "${user}"
+    name_orig=$(echo "${file}" | sed -e "s/${KEYBASE_PREFIX}.//" | sed -e "s/${extension}//" | sed -e 's/\.[^\.]*$//')
+    keybase decrypt -i "${file}" -o "${name_orig}${extension}"
 }
