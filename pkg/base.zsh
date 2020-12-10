@@ -6,35 +6,6 @@ function keybase::dependences {
     message_success "Installed dependences for ${KEYBASE_PACKAGE_NAME}"
 }
 
-function keybase::core::validation {
-    [ -z "${KEYBASE_PREFIX}" ] && message_warning "KEYBASE_PREFIX is neccesary"
-}
-
-# keybase::core::encrypt - encrypt
-# filename file
-# user user to encrypt
-function keybase::core::encrypt {
-    local filename user
-    filename="${1}"
-    user="${2}"
-    if [ -z "${user}" ]; then
-        user="$(keybase whoami)"
-    fi
-    keybase encrypt -b -i "${filename}" -o CHANGELOG."${KEYBASE_PREFIX}".rst "${user}"
-}
-
-# keybase::core::decrypt - decrypt
-# filename file
-# user user to decrypt
-function keybase::core::decrypt {
-    local filename user
-    filename="${1}"
-    user="${2}"
-    if [ -z "${user}" ]; then
-        user="$(keybase whoami)"
-    fi
-    keybase decrypt -b -i "${filename}" -o CHANGELOG."${KEYBASE_PREFIX}".rst "${user}"
-}
 
 function keybase::pgp::validation {
     [ -z "${GPG_SIGNING_KEY}" ] && message_warning "GPG_SIGNING_KEY is neccesary"
@@ -66,4 +37,12 @@ function keybase::git::validation {
 function keybase::git::signingkey {
     git config --global user.signingkey "${GPG_SIGNING_KEY}"
     git config --global commit.gpgsign true
+}
+
+function keybase::encrypt {
+    keybase::internal::encrypt "${1}" "${2}"
+}
+
+function keybase::decrypt {
+    keybase::internal::decrypt "${1}" "${2}"
 }
